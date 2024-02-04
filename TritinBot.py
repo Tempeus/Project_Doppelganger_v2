@@ -64,7 +64,7 @@ async def generate_response(user_message):
 
 @bot.event
 async def on_message(message):
-    if message.channel.name == 'games-anime-memes' or message.channel.name == 'debate-discussion-delirium':
+    if message.channel.name == 'games-anime-memes' or message.channel.name == 'debate-discussion-delirium' and "http" not in message.content and "<" not in message.content:
         if bot.user.mentioned_in(message):
             # Get the user's message
             user_message = message.content.replace(f'<@{bot.user.id}>', '').strip()
