@@ -6,6 +6,7 @@ import concurrent.futures
 import asyncio
 from openai import AsyncOpenAI
 import random
+from uwuipy import uwuipy
 
 # environment variables
 load_dotenv()
@@ -41,7 +42,7 @@ client = AsyncOpenAI(
 async def generate_response(user_message):
     # Call ChatGPT API to get a response
     print("generating response to: ")
-    print(user_message)
+    print(PERSONALITY + user_message)
     response = await client.chat.completions.create(
         messages=[
             {
@@ -52,20 +53,27 @@ async def generate_response(user_message):
         model="gpt-3.5-turbo",
     )
     print("log: ", response)
-    return response.choices[0].message.content
+
+    response = response.choices[0].message.content
+
+    if event_with_probability(0.25):
+        #uwuify this message
+        response = uwuipy().uwuify(response)
+
+    return response
 
 @bot.event
 async def on_message(message):
-    if message.channel.name == 'games-anime-memes':
+    if message.channel.name == 'games-anime-memes' or message.channel.name == 'debate-discussion-delirium':
         if bot.user.mentioned_in(message):
             # Get the user's message
-            user_message = message.content.replace(f'<@!{bot.user.id}>', '').strip()
+            user_message = message.content.replace(f'<@{bot.user.id}>', '').strip()
             response = await generate_response(user_message)
 
             # Send the response back to the Discord channel
             await message.channel.send(response)
 
-        elif not message.author.bot and event_with_probability(0.05):
+        elif not message.author.bot and event_with_probability(0.50):
             user_message = message.content.strip()
             response = await generate_response(user_message)
 
