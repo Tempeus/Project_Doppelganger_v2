@@ -56,7 +56,7 @@ async def generate_response(user_message):
 
     response = response.choices[0].message.content
 
-    if event_with_probability(0.10):
+    if event_with_probability(0.05):
         #uwuify this message
         response = uwuipy().uwuify(response)
 
