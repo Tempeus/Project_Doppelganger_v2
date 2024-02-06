@@ -73,7 +73,7 @@ async def on_message(message):
             # Send the response back to the Discord channel
             await message.channel.send(response)
 
-        elif not message.author.bot and event_with_probability(0.50):
+        elif not message.author.bot and event_with_probability(0.35):
             user_message = message.content.strip()
             response = await generate_response(user_message)
 
