@@ -64,7 +64,7 @@ async def generate_response(user_message):
 
 @bot.event
 async def on_message(message):
-    if message.channel.name == 'games-anime-memes' or message.channel.name == 'debate-discussion-delirium' and message.content:
+    if message.channel.name == 'debate-discussion-delirium' and message.content:
         if bot.user.mentioned_in(message):
             # Get the user's message
             user_message = message.content.replace(f'<@{bot.user.id}>', '').strip()
@@ -73,7 +73,7 @@ async def on_message(message):
             # Send the response back to the Discord channel
             await message.channel.send(response)
 
-        elif not message.author.bot and event_with_probability(0.35):
+        elif not message.author.bot and event_with_probability(0.25):
             user_message = message.content.strip()
             response = await generate_response(user_message)
 
@@ -81,4 +81,4 @@ async def on_message(message):
             await message.channel.send(response)
 
     await bot.process_commands(message)
-bot.run(TOKEN)
+bot.run(TOKEN) 
